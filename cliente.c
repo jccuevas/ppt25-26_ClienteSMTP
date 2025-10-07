@@ -5,11 +5,11 @@
  * Universidad de Jaén
  *
  *******************************************************
- * Práctica 1
+ * Práctica 3
  * Fichero: cliente.c
- * Versión: 3.2
+ * Versión: 1.0
  * Curso: 2025/2026
- * Descripción: Cliente sencillo TCP para IPv4 e IPv6
+ * Descripción: Cliente SMTP sencillo sobre IPv4 o IPv6
  * Autor: Juan Carlos Cuevas Martínez
  *
  ******************************************************
