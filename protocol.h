@@ -6,10 +6,10 @@
  *
  *******************************************************
  * Práctica 1
- * Fichero: protocol.c
- * Versión: 4.0
+ * Fichero: protocol.h
+ * Versión: 1.0
  * Curso: 2025/2026
- * Descripción: Fichero de encabezado para práctica 1
+ * Descripción: Fichero de encabezado para práctica 3
  * Autor: Juan Carlos Cuevas Martínez
  *
  ******************************************************
@@ -44,10 +44,5 @@
 
 
 //PUERTO DEL SERVICIO
-#define TCP_SERVICE_PORT	60000
+#define TCP_SERVICE_PORT	25
 
-// NOMBRE Y CLAVE AUTORIZADOS
-// Nota: esto no se debe hacer nunca, es solamente para simplificar el funcionamiento del
-// servidor, el cual debería almacenar estos datos en una base de datos de forma segura.
-#define TEST_USER		"user" 
-#define TEST_PASSWORD	"1234"
