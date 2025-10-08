@@ -39,7 +39,7 @@ int main(int* argc, char* argv[])
 	char option;
 	int ipversion = AF_INET;//IPv4 por defecto
 	char ipdest[256];
-	char default_ip4[16] = "127.0.0.1";
+	char default_ip4[16] = "150.214.179.118"; //Dirección IP del servidor SMTP de la UJA";
 	char default_ip6[64] = "::1";
 
 	WORD wVersionRequested;
