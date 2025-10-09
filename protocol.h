@@ -36,7 +36,7 @@
 #define R250	"250"
 #define R354	"354"
 #define R500	"500"
-#define R221   "221"
+#define R221    "221"
 
 //FIN DE RESPUESTA
 #define CRLF "\r\n"
