@@ -29,7 +29,7 @@
 #define RSET "RSET"
 #define QUIT "QUIT"
 
-
+//Un cambio de línea
 
 // RESPUESTAS A COMANDOS DE APLICACION
 #define R220	"202"
