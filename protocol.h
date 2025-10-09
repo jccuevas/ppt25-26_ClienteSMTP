@@ -30,6 +30,7 @@
 #define QUIT "QUIT"
 
 //Un cambio de línea
+//Otro cambio
 
 // RESPUESTAS A COMANDOS DE APLICACION
 #define R220	"202"
