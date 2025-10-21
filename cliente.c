@@ -124,16 +124,16 @@ int main(int* argc, char* argv[])
 					case S_INIT:
 						// Se recibe el mensaje de bienvenida
 						break;
-					case S_USER:
+					case S_HELO:
 						// establece la conexion de aplicacion 
-						printf("CLIENTE> Introduzca el usuario (enter para salir): ");
+						printf("CLIENTE> Introduzca su dominio (enter para salir): ");
 						gets_s(input, sizeof(input));
 						if (strlen(input) == 0) {
 							sprintf_s(buffer_out, sizeof(buffer_out), "%s%s", QUIT, CRLF);
 							status = S_QUIT;
 						}
 						else {
-							sprintf_s(buffer_out, sizeof(buffer_out), "%s %s%s", USER, input, CRLF);
+							sprintf_s(buffer_out, sizeof(buffer_out), "%s %s%s", HELO, input, CRLF);
 						}
 						break;
 					case S_PASS:

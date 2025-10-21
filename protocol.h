@@ -33,7 +33,7 @@
 //Otro cambio
 
 // RESPUESTAS A COMANDOS DE APLICACION
-#define R220	"202"
+#define R220	"220"
 #define R250	"250"
 #define R354	"354"
 #define R500	"500"
