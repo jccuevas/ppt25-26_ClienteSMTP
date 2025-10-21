@@ -13,7 +13,7 @@
  * Autor: Juan Carlos Cuevas Martínez
  *
  ******************************************************
- * Alumno 1:
+ * Alumno 1: Juan Carlos Cuevas Martínez
  * Alumno 2:
  *
  ******************************************************/
