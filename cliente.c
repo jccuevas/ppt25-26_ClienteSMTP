@@ -26,8 +26,6 @@
 
 #pragma comment(lib, "Ws2_32.lib")//Inserta en la vinculación (linking) la biblioteca Ws2_32.lib
 
-
-
 int main(int* argc, char* argv[])
 {
 	SOCKET sockfd;
@@ -152,30 +150,13 @@ int main(int* argc, char* argv[])
 						//CAPA DE APLICACIÓN
 						buffer_in[received] = 0x00;
 						printf(buffer_in);
-<<<<<<< HEAD
-						//analizar la respuesta del servidor en función del estado
-						switch (status)
-						{
-						case S_INIT:
-							if (strncmp(buffer_in, SC220, 3) == 0) {
-								status = S_HELO;
-							}
-							else {
-								status = S_QUIT;
-							}
-							break;
-						case S_HELO:
-
-							break;
-						default:
-							break;
+						if (status != S_DATA && strncmp(buffer_in, OK, 2) == 0){
+							status++;
 						}
-=======
-						//analizar la respuesta del servidor
->>>>>>> 8f36e86645329c9b57ec3d1f118918318b5a0459
-						
-						//Cambiar al estado que corresponda
-						
+						//Si la autenticación no es correcta se vuelve al estado S_USER
+						if (status == S_PASS && strncmp(buffer_in, OK, 2) != 0) {
+							status = S_USER;
+						}
 					}
 
 				} while (status != S_QUIT);
