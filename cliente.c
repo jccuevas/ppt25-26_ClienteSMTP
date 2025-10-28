@@ -152,6 +152,7 @@ int main(int* argc, char* argv[])
 						//CAPA DE APLICACIÓN
 						buffer_in[received] = 0x00;
 						printf(buffer_in);
+<<<<<<< HEAD
 						//analizar la respuesta del servidor en función del estado
 						switch (status)
 						{
@@ -169,6 +170,9 @@ int main(int* argc, char* argv[])
 						default:
 							break;
 						}
+=======
+						//analizar la respuesta del servidor
+>>>>>>> 8f36e86645329c9b57ec3d1f118918318b5a0459
 						
 						//Cambiar al estado que corresponda
 						
