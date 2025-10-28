@@ -22,8 +22,10 @@
 #include <conio.h>		// Biblioteca de entrada salida básica
 #include <locale.h>		// Para establecer el idioma de la codificación de texto, números, etc.
 #include "protocol.h"	// Declarar constantes y funciones de la práctica
+#include "smtp.h"		// Funcionamiento del protocolo SMTP
 
 #pragma comment(lib, "Ws2_32.lib")//Inserta en la vinculación (linking) la biblioteca Ws2_32.lib
+
 
 
 int main(int* argc, char* argv[])
@@ -120,47 +122,11 @@ int main(int* argc, char* argv[])
 
 				//Inicio de la máquina de estados
 				do {
-					switch (status) {
-					case S_INIT:
-						// Se recibe el mensaje de bienvenida
-						break;
-					case S_HELO:
-						// establece la conexion de aplicacion 
-						printf("CLIENTE> Introduzca su dominio (enter para salir): ");
-						gets_s(input, sizeof(input));
-						if (strlen(input) == 0) {
-							sprintf_s(buffer_out, sizeof(buffer_out), "%s%s", QUIT, CRLF);
-							status = S_QUIT;
-						}
-						else {
-							sprintf_s(buffer_out, sizeof(buffer_out), "%s %s%s", HELO, input, CRLF);
-						}
-						break;
-					case S_PASS:
-						printf("CLIENTE> Introduzca la clave (enter para salir): ");
-						gets_s(input, sizeof(input));
-						if (strlen(input) == 0) {
-							sprintf_s(buffer_out, sizeof(buffer_out), "%s%s", QUIT, CRLF);
-							status = S_QUIT;
-						}
-						else
-							sprintf_s(buffer_out, sizeof(buffer_out), "%s %s%s", PASS, input, CRLF);
-						break;
-					case S_DATA:
-						printf("CLIENTE> Introduzca datos (enter para salir): ");
-						gets_s(input, sizeof(input));
-						if (strlen(input) == 0) {
-							sprintf_s(buffer_out, sizeof(buffer_out), "%s%s", QUIT, CRLF);
-							status = S_QUIT;
-						}
-						else {
-							sprintf_s(buffer_out, sizeof(buffer_out), "%s %s%s", ECHO, input, CRLF);
-						}
-						break;
-
-					}
+					//CAPA DE APLICACIÓN
+					strcpy_s(buffer_out,sizeof(buffer_out),smtpSM(status));
 
 					if (status != S_INIT) {
+						//CAPA DE TRANSPORTE
 						sent = send(sockfd, buffer_out, (int)strlen(buffer_out), 0);
 						if (sent == SOCKET_ERROR) {
 							status = S_QUIT;
@@ -169,6 +135,7 @@ int main(int* argc, char* argv[])
 						}
 					}
 
+					//CAPA DE TRANSPORTE
 					received = recv(sockfd, buffer_in, 512, 0);
 					if (received <= 0) {
 						DWORD error = GetLastError();
@@ -182,15 +149,13 @@ int main(int* argc, char* argv[])
 						}
 					}
 					else {
+						//CAPA DE APLICACIÓN
 						buffer_in[received] = 0x00;
 						printf(buffer_in);
-						if (status != S_DATA && strncmp(buffer_in, OK, 2) == 0){
-							status++;
-						}
-						//Si la autenticación no es correcta se vuelve al estado S_USER
-						if (status == S_PASS && strncmp(buffer_in, OK, 2) != 0) {
-							status = S_USER;
-						}
+						//analizar la respuesta del servidor
+						
+						//Cambiar al estado que corresponda
+						
 					}
 
 				} while (status != S_QUIT);
@@ -209,3 +174,4 @@ int main(int* argc, char* argv[])
 
 	return(0);
 }
+
