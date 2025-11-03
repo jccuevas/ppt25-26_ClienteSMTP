@@ -33,7 +33,7 @@ int main(int* argc, char* argv[])
 	struct sockaddr_in server_in4;
 	struct sockaddr_in6 server_in6;
 	int address_size = sizeof(server_in4);
-	char buffer_in[1024], buffer_out[1024], input[1024];
+	char buffer_in[1024], buffer_out[1024];//Eliminada al extraer la función smtpSM: , input[1024];
 	int received = 0, sent = 0;
 	int status;
 	char option;
@@ -121,7 +121,7 @@ int main(int* argc, char* argv[])
 				//Inicio de la máquina de estados
 				do {
 					//CAPA DE APLICACIÓN
-					strcpy_s(buffer_out,sizeof(buffer_out),smtpSM(status));
+					smtpSM(status, buffer_out, sizeof(buffer_out));
 
 					if (status != S_INIT) {
 						//CAPA DE TRANSPORTE
@@ -150,12 +150,47 @@ int main(int* argc, char* argv[])
 						//CAPA DE APLICACIÓN
 						buffer_in[received] = 0x00;
 						printf(buffer_in);
-						if (status != S_DATA && strncmp(buffer_in, OK, 2) == 0){
-							status++;
-						}
-						//Si la autenticación no es correcta se vuelve al estado S_USER
-						if (status == S_PASS && strncmp(buffer_in, OK, 2) != 0) {
-							status = S_USER;
+						switch (status) {
+							case S_INIT:
+								if (strncmp(buffer_in, R220, 3) == 0) {
+									status = S_HELO;
+								}
+								else {
+									//Tarea opcional: gestionar el error que devuelve el servidor si no es 220
+									status = S_QUIT;
+								}
+								break;
+
+							/* Sesión 3*/
+							case S_HELO:
+							case S_MAIL:
+							case S_RCPT:
+								if (strncmp(buffer_in, R250, 3) == 0) {
+									status++;
+								}
+								//Si hay un error se mantiene el estado actual para reintentarlo o que el usuario envíe QUIT para salir
+								//por lo tanto no hace falta añadir nada en el else
+
+								break;
+							case S_DATA:
+								if (strncmp(buffer_in, R354, 3) == 0) {
+									status = S_MSG;
+								}
+								else {
+									//Tarea opcional: gestionar el error que devuelve el servidor si no es 354
+									status = S_QUIT;
+								}
+								break;
+							case S_MSG:
+								if (strncmp(buffer_in, R250, 3) == 0) {
+									status=S_MAIL;
+								}
+								else {
+									//Tarea opcional: gestionar el error que devuelve el servidor si no es 250
+									status = S_QUIT;
+								}
+								break;
+								/* Fin sesión 3*/
 						}
 					}
 

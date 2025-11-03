@@ -1,5 +1,5 @@
 #pragma once
-char* smtpSM(int status);
+int smtpSM(int status, char* buffer_out, size_t sbout);
 // COMANDOS DE APLICACION
 #define HELO "HELO"
 #define MAIL "MAIL FROM:"
@@ -33,4 +33,5 @@ char* smtpSM(int status);
 #define S_MAIL 2
 #define S_RCPT 3
 #define S_DATA 4
-#define S_QUIT 5
+#define S_MSG  5 //Sesión 3: Añadido para la Tarea 3
+#define S_QUIT 6 //Sesión 3: Modificado para la Tarea 3
