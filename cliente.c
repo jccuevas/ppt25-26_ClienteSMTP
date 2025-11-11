@@ -134,23 +134,24 @@ int main(int* argc, char* argv[])
 					}
 
 					//CAPA DE TRANSPORTE
-					received = recv(sockfd, buffer_in, 512, 0);
-					if (received <= 0) {
-						DWORD error = GetLastError();
-						if (received < 0) {
-							printf("CLIENTE> Error %d en la recepción de datos\r\n", error);
-							status = S_QUIT;
+					if (status != S_MSG || /* ENVIADO el .CRLF*/ (status == S_MSG && strcmp(buffer_out, ".\r\n")==0)) {
+						received = recv(sockfd, buffer_in, 512, 0);
+						if (received <= 0) {
+							DWORD error = GetLastError();
+							if (received < 0) {
+								printf("CLIENTE> Error %d en la recepción de datos\r\n", error);
+								status = S_QUIT;
+							}
+							else {
+								printf("CLIENTE> Conexión con el servidor cerrada\r\n");
+								status = S_QUIT;
+							}
 						}
 						else {
-							printf("CLIENTE> Conexión con el servidor cerrada\r\n");
-							status = S_QUIT;
-						}
-					}
-					else {
-						//CAPA DE APLICACIÓN
-						buffer_in[received] = 0x00;
-						printf(buffer_in);
-						switch (status) {
+							//CAPA DE APLICACIÓN
+							buffer_in[received] = 0x00;
+							printf(buffer_in);
+							switch (status) {
 							case S_INIT:
 								if (strncmp(buffer_in, R220, 3) == 0) {
 									status = S_HELO;
@@ -161,12 +162,21 @@ int main(int* argc, char* argv[])
 								}
 								break;
 
-							/* Sesión 3*/
+								/* Sesión 3*/
 							case S_HELO:
 							case S_MAIL:
-							case S_RCPT:
 								if (strncmp(buffer_in, R250, 3) == 0) {
 									status++;
+								}
+								break;
+							case S_RCPT:
+								if (strncmp(buffer_in, R250, 3) == 0) {
+
+									printf("¿Quieres enviar a otro destinatario? (S/N)");
+									option = _getch();
+									if (option != 's' && option != 'S') {
+										status++;
+									}
 								}
 								//Si hay un error se mantiene el estado actual para reintentarlo o que el usuario envíe QUIT para salir
 								//por lo tanto no hace falta añadir nada en el else
@@ -183,7 +193,7 @@ int main(int* argc, char* argv[])
 								break;
 							case S_MSG:
 								if (strncmp(buffer_in, R250, 3) == 0) {
-									status=S_MAIL;
+									status = S_MAIL;
 								}
 								else {
 									//Tarea opcional: gestionar el error que devuelve el servidor si no es 250
@@ -191,6 +201,7 @@ int main(int* argc, char* argv[])
 								}
 								break;
 								/* Fin sesión 3*/
+							}
 						}
 					}
 
