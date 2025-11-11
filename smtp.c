@@ -63,8 +63,11 @@ int smtpSM(int status, char *buffer_out,size_t sbout) {
 		// - Pida una cadena de texto (línea del correo)
 		// - Concatene en buffer_out la cadena introducida + CRLF + "." + CRLF
 		// - Aquí no se puede enviar QUIT, ya que se está en medio del envío del mensaje
-		//printf("CLIENTE> Introduzca el asunto del correo: ");
-		//gets_s(subject, sizeof(subject));
+		
+		//Debe crear una máquina con sub-estados para el envío de las
+		//tres cabeceras subject, to y from y por último la líneas
+		//del correo.
+
 		/* SESIÓN 3*/
 		//sprintf_s(buffer_out, sbout, "Subject: %s%s%s%s%s.%s", subject, CRLF, CRLF, input, CRLF, CRLF);
 		/* SESIÓN 4*/
