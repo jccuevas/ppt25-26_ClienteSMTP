@@ -175,7 +175,12 @@ int main(int* argc, char* argv[])
 									printf("¿Quieres enviar a otro destinatario? (S/N)");
 									option = _getch();
 									if (option != 's' && option != 'S') {
+										//No quiere enviar más RCPT
+										//preguntar si son los datos correctos
+										//Sí: 
 										status++;
+										//No:
+										//status=S_RSET
 									}
 								}
 								//Si hay un error se mantiene el estado actual para reintentarlo o que el usuario envíe QUIT para salir
@@ -201,6 +206,16 @@ int main(int* argc, char* argv[])
 								}
 								break;
 								/* Fin sesión 3*/
+
+							case S_RSET:
+								if (strncmp(buffer_in, R250, 3) == 0) {
+									status = S_MAIL;
+								}
+								else {
+									//No es 250 pero...
+									status = S_MAIL;
+								}
+								break;
 							}
 						}
 					}
