@@ -17,9 +17,11 @@ Realizar un cliente SMTP [1] en lenguaje C con una interfaz sencilla basada en t
 ### Código de la aplicación
 #### Plataforma de docencia
 Se deberá subir en la tarea reservada para la entrega en la plataforma de docencia virtual un fichero comprimido con todos aquellos ficheros de código fuente en C necesarios para la adecuada compilación y construcción del código (.c y/o .h), nunca los ficheros del proyecto, ficheros ejecutables o de código objeto.
-•	El nombre del fichero deberá comenzar por práctica3_ y estar seguido por el identificador de quién/quiénes hayan realizado la práctica. Ejemplo: práctica3_estudiante1 o práctica3_estudiante1_estudiante2 para dos estudiantes.
-•	El código entregado deberá cumplir con los objetivos concretos descritos en la práctica, tener comentarios que ayuden a su seguimiento y corrección además de no tener errores de sintaxis, ni de ejecución.
-•	En el caso de que la práctica se realice en pareja, cada estudiante deberá entregar el mismo material por separado en la plataforma de docencia de la UJA.
+*	El nombre del fichero deberá comenzar por práctica3_ y estar seguido por el identificador de quién/quiénes hayan realizado la práctica. Ejemplo: práctica3_estudiante1 o práctica3_estudiante1_estudiante2 para dos estudiantes.
+*	El código entregado deberá cumplir con los objetivos concretos descritos en la práctica, tener comentarios que ayuden a su seguimiento y corrección además de no tener errores de sintaxis, ni de ejecución.
+*	En el caso de que la práctica se realice en pareja, cada estudiante deberá entregar el mismo material por separado en la plataforma de docencia de la UJA.
+
 El no cumplir con los requisitos de entrega podrá conllevar una penalización en la calificación final de la práctica de hasta 1 punto.
+
 #### Plataforma GitHub
 Todo el código deberá estar accesible al profesor/a a través de la herramienta de control de versiones GitHub, para lo cual se deberá añadir a éste/a como colaborador al repositorio que contenga la práctica. Cada sesión de trabajo deberá contar con al menos una actualización significativa del trabajo desarrollado en la misma.
